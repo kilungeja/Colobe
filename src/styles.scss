@@ -82,6 +82,27 @@ nav {
     height: calc(100vh - 58px);
     overflow: auto;
     background: rgb(240, 240, 255) !important;
+    #total_assets {
+      .total_assets {
+        border-bottom: 1px double rgb(0, 0, 139) !important;
+        margin-top: 1rem;
+      }
+      h6 {
+        text-transform: uppercase;
+      }
+      .d-flex {
+        transition: all ease-in-out 0.25s;
+        border-bottom: 1px dotted rgba(0, 0, 139, 0.85);
+        padding: 0.5rem;
+        p {
+          margin: 0;
+        }
+        &:hover {
+          cursor: pointer;
+          background: rgba(0, 0, 139, 0.1);
+        }
+      }
+    }
     table {
       tbody {
         tr {
