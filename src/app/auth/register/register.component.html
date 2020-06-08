@@ -1,51 +1,70 @@
 <section id="login" class="register">
-    <div class="overlay"></div>
-    <app-navbar></app-navbar>
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-md-6 offset-md-6">
-                <div class="card card-body bg-light">
-                    <h1 class="card-title text-center">Account Register</h1>
-                    <form>
-                      <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="firstName">First Name</label>
-                                <input type="text" class="form-control" id="firstName" >
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="lastName">Last Name</label>
-                                <input type="text" class="form-control" id="lastName" >
-                              </div>
-                        </div>
-                      </div>
-                        
-                        <div class="form-group">
-                          <label for="email">Email address</label>
-                          <input type="email" class="form-control" id="email" >
-                        </div>
-                        <div class="form-group">
-                          <label for="regno">Reg No.</label>
-                          <input type="text" class="form-control" id="regno" placeholder="13303155/T.17">
-                        </div>
-                        <div class="form-group">
-                          <label for="phone">Phone No.</label>
-                          <input type="text" class="form-control" id="phone" placeholder="0..." >
-                        </div>
-                        <div class="form-group">
-                            <label for="password">Password</label>
-                            <input type="password" class="form-control" id="password">
-                        </div>
-                        <div class="form-group">
-                          <label for="password2">Verfy password</label>
-                          <input type="password" class="form-control" id="password2">
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block">Register</button>
-                      </form>
+  <div class="overlay"></div>
+  <app-navbar></app-navbar>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6 offset-md-6">
+        <div class="card card-body bg-light shadow-lg">
+          <h3 class="card-title text-center text-muted">
+            <i class="fas fa-user-alt mr-2"></i>Account Register
+          </h3>
+          <form>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="firstName">First Name</label>
+                  <input type="text" class="form-control" id="firstName" />
                 </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="lastName">Last Name</label>
+                  <input type="text" class="form-control" id="lastName" />
+                </div>
+              </div>
             </div>
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" />
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="regno">Reg No.</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="regno"
+                    placeholder="13303155/T.17"
+                  />
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="phone">Phone No.</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="phone"
+                    placeholder="0..."
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" />
+            </div>
+            <div class="form-group">
+              <label for="password2">Verfy password</label>
+              <input type="password" class="form-control" id="password2" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              Register
+            </button>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </section>
