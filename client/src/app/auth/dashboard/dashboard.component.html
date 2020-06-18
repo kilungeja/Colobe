@@ -1,0 +1,44 @@
+<section id="dashboard" class="bg-primary">
+  <app-navbar></app-navbar>
+  <div class="row">
+    <div id="dash_nav" class="col-2 pt-5 pr-0">
+      <div class="overlay"></div>
+      <ul class="nav flex-column">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link " routerLink="/dashboard/user-home"
+            ><i class="fas fa-sliders-h mr-2"></i>Home</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/dashboard/creditors"
+            ><i class="fas fa-chart-line mr-2"></i>Creditors</a
+          >
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/dashboard/assets"
+            ><i class="far fa-id-card mr-2"></i>Assets</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/dashboard/applicants"
+            ><i class="fas fa-user-friends mr-2"></i>Applicants</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/dashboard/loan"
+            ><i class="fas fa-hand-holding mr-2"></i>Apply for loan</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link " routerLink="/dashboard/settings"
+            ><i class="fas fa-user-cog mr-2"></i>Account settings</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div id="dashboard-row_col" class="col-10 bg-light pt-4 pr-4">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</section>

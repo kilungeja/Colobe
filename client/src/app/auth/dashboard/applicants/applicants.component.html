@@ -1,0 +1,62 @@
+<div class="row mx-auto">
+  <div class="col-xl-6">
+    <div class="card card-body  shadow-lg">
+      <h4 class="text-muted text-center mb-3">Loan applicants</h4>
+      <table class="table">
+        <thead class="bg-secondary text-light">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Username</th>
+            <th scope="col">Phone number</th>
+            <th scope="col">Amount</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Jdoe</td>
+            <td>0837662263</td>
+            <td>tzsh 25,000</td>
+            <td>
+              <a
+                [routerLink]="['/dashboard/applicants', 1]"
+                class=" btn-details"
+                >Details<i class="fas fa-angle-double-right ml-2"></i
+              ></a>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>jhdoe</td>
+            <td>0837662263</td>
+            <td>tzsh 25,000</td>
+            <td>
+              <a
+                [routerLink]="['/dashboard/applicants', 2]"
+                class=" btn-details"
+                >Details<i class="fas fa-angle-double-right ml-2"></i
+              ></a>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Gile</td>
+            <td>0837662263</td>
+            <td>tzsh 25,000</td>
+            <td>
+              <a
+                [routerLink]="['/dashboard/applicants', 3]"
+                class=" btn-details"
+                >Details<i class="fas fa-angle-double-right ml-2"></i
+              ></a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <router-outlet></router-outlet>
+  </div>
+</div>
