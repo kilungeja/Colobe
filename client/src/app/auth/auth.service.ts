@@ -6,6 +6,8 @@ export class AuthService {
   constructor(private httpClient: HttpClient) {}
   BASE_URL = 'http://localhost:5000/api/auth';
   postRegister(userData) {
-    return this.httpClient.post(`${this.BASE_URL}/register`, { ...userData });
+    return this.httpClient.post<{ msg: string }>(`${this.BASE_URL}/register`, {
+      ...userData
+    });
   }
 }

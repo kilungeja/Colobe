@@ -10,6 +10,12 @@
           {{ msg.msg }}
         </div>
       </div>
+      <div class="col-md-6 p-5" *ngIf="!loading && successMsg">
+        <div class="alert alert-success" role="alert">
+          <strong><i class="fas fa-arrow-alt-circle-right mr-2"></i></strong>
+          {{ successMsg }}
+        </div>
+      </div>
       <div class="col-md-6 ml-auto">
         <div class="border p-5 auth_form">
           <h3 class="card-title text-center text-white">

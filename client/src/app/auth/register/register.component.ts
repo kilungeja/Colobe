@@ -10,6 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class RegisterComponent {
   errors: any;
   loading = false;
+  successMsg = null;
   constructor(private authService: AuthService) {}
   onSubmit(userData: NgForm) {
     if (userData.invalid) {
@@ -19,7 +20,10 @@ export class RegisterComponent {
     this.authService.postRegister(userData.value).subscribe(
       data => {
         this.loading = false;
-        console.log(data);
+        this.successMsg = data.msg;
+        setTimeout(() => {
+          this.successMsg = null;
+        }, 5000);
       },
       (err: HttpErrorResponse) => {
         this.loading = false;
