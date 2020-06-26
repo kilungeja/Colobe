@@ -13,6 +13,7 @@ import { ApplicantsComponent } from './auth/dashboard/applicants/applicants.comp
 import { ApplicantDetailsComponent } from './auth/dashboard/applicants/applicant-details/applicant-details.component';
 import { CreditorDetailsComponent } from './auth/dashboard/creditors/creditor-details/creditor-details.component';
 import { LoanApplicationComponent } from './auth/dashboard/loan-appication/loan-application.component';
+import { AuthGuard } from './auth/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   {
     path: 'dashboard',
+    canActivate: [AuthGuard],
     component: DashboardComponent,
     children: [
       { path: 'user-home', component: UserHomeComponent },

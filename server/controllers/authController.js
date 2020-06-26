@@ -1,10 +1,44 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 
-exports.postLogin = (req, res, next) => {
-  res.send("hi there");
+exports.postLogin = async (req, res, next) => {
+  let err = validationResult(req);
+  let errors = err.array();
+  if (!err.isEmpty()) {
+    return res.status(422).json({ msg: "Validation error", errors });
+  }
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ msg: "Wrong username or password" });
+    }
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
+      return res.status(401).json({ msg: "Wrong username or password" });
+    }
+    const data = {
+      _id: user._id,
+      username: user.username
+    };
+    const token = jwt.sign(
+      {
+        data
+      },
+      "superlongsecretword",
+      { expiresIn: "1h" }
+    );
+
+    res.json({ msg: "Successfully logged in", token });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: "Server Error" });
+  }
 };
 exports.postRegister = (req, res, next) => {
   let err = validationResult(req);

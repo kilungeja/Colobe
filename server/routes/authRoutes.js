@@ -5,7 +5,22 @@ const User = require("../models/User");
 
 const { postLogin, postRegister } = require("../controllers/authController");
 
-router.post("/login", postLogin);
+router.post(
+  "/login",
+  [
+    body("password", "Password field should not be empty")
+      .not()
+      .isEmpty(),
+    body("email")
+      .not()
+      .isEmpty()
+      .withMessage("Email field should not be empty")
+      .isEmail()
+      .withMessage("E-mail address should be valid")
+      .trim()
+  ],
+  postLogin
+);
 router.post(
   "/register",
   [

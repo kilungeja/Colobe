@@ -22,26 +22,29 @@
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
-      <li>
-        <span class="navbar-text"
-          ><i class="fas fa-tachometer-alt mr-2"></i>Welcome,<strong>
-            Jane Doe</strong
-          ></span
-        >
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/login"
-          ><i class="fas fa-sign-in-alt mr-2"></i>Login</a
-        >
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/register">Register</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/logout"
-          ><i class="fas fa-power-off mr-2"></i>Logout</a
-        >
-      </li>
+      <ng-container *ngIf="getUsername()">
+        <li>
+          <span class="navbar-text"
+            ><i class="fas fa-tachometer-alt mr-2"></i>Welcome,
+            <strong class="ml-2"> {{ getUsername() }}</strong></span
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" (click)="onLogout()"
+            ><i class="fas fa-power-off mr-2"></i>Logout</a
+          >
+        </li>
+      </ng-container>
+      <ng-container *ngIf="!getUsername()">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/login"
+            ><i class="fas fa-sign-in-alt mr-2"></i>Login</a
+          >
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" routerLink="/register">Register</a>
+        </li>
+      </ng-container>
     </ul>
   </div>
 </nav>

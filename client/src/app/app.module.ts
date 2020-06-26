@@ -3,6 +3,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
+import { JwtModule } from '@auth0/angular-jwt';
+
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { BodyComponent } from './body/body.component';
@@ -23,6 +25,10 @@ import { ApplicantDetailsComponent } from './auth/dashboard/applicants/applicant
 import { UsersChartComponent } from './auth/dashboard/charts/usersChart/usersChart.component';
 import { CreditorDetailsComponent } from './auth/dashboard/creditors/creditor-details/creditor-details.component';
 import { LoanApplicationComponent } from './auth/dashboard/loan-appication/loan-application.component';
+
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -46,7 +52,18 @@ import { LoanApplicationComponent } from './auth/dashboard/loan-appication/loan-
     CreditorDetailsComponent,
     LoanApplicationComponent
   ],
-  imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter,
+        whitelistedDomains: ['localhost:5000']
+      }
+    })
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })
