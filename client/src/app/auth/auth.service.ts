@@ -13,9 +13,15 @@ export class AuthService {
   ) {}
   BASE_URL = 'http://localhost:5000/api/auth';
   postRegister(userData) {
-    return this.httpClient.post<{ msg: string }>(`${this.BASE_URL}/register`, {
-      ...userData
-    });
+    return this.httpClient
+      .post<{ msg: string }>(`${this.BASE_URL}/register`, {
+        ...userData
+      })
+      .pipe(
+        tap(data => {
+          this.route.navigate(['/login']);
+        })
+      );
   }
   postLogin(userData) {
     return this.httpClient
@@ -26,6 +32,7 @@ export class AuthService {
         tap(data => {
           localStorage.setItem('access_token', data.token);
           this.route.navigate(['/dashboard/user-home']);
+          this.autoLogout(3600000);
         })
       );
   }
@@ -38,6 +45,10 @@ export class AuthService {
       return false;
     }
     return decodedToken.data.username;
+  }
+
+  autoLogout(time) {
+    setTimeout(() => this.logout(), time);
   }
 
   logout() {

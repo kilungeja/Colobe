@@ -1,52 +1,28 @@
 <div class="row mx-auto">
   <div class="col-xl-6">
-    <div class="card card-body  shadow-lg">
+    <app-spinner *ngIf="loading"></app-spinner>
+    <div class="card card-body  shadow-lg" *ngIf="!loading">
       <h4 class="text-muted text-center mb-3">Loan applicants</h4>
-      <table class="table">
+      <p class="p-3" *ngIf="!loading && loans.length < 1">
+        No applicants at the moment.
+      </p>
+      <table class="table" *ngIf="loans.length > 0">
         <thead class="bg-secondary text-light">
           <tr>
             <th scope="col"></th>
             <th scope="col">Username</th>
-            <th scope="col">Phone number</th>
             <th scope="col">Amount</th>
             <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Jdoe</td>
-            <td>0837662263</td>
-            <td>tzsh 25,000</td>
+          <tr *ngFor="let loan of loans; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>@Jdoe</td>
+            <td>tzsh {{ loan.amount }}</td>
             <td>
               <a
                 [routerLink]="['/dashboard/applicants', 1]"
-                class=" btn-details"
-                >Details<i class="fas fa-angle-double-right ml-2"></i
-              ></a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>jhdoe</td>
-            <td>0837662263</td>
-            <td>tzsh 25,000</td>
-            <td>
-              <a
-                [routerLink]="['/dashboard/applicants', 2]"
-                class=" btn-details"
-                >Details<i class="fas fa-angle-double-right ml-2"></i
-              ></a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Gile</td>
-            <td>0837662263</td>
-            <td>tzsh 25,000</td>
-            <td>
-              <a
-                [routerLink]="['/dashboard/applicants', 3]"
                 class=" btn-details"
                 >Details<i class="fas fa-angle-double-right ml-2"></i
               ></a>

@@ -25,6 +25,7 @@ import { ApplicantDetailsComponent } from './auth/dashboard/applicants/applicant
 import { UsersChartComponent } from './auth/dashboard/charts/usersChart/usersChart.component';
 import { CreditorDetailsComponent } from './auth/dashboard/creditors/creditor-details/creditor-details.component';
 import { LoanApplicationComponent } from './auth/dashboard/loan-appication/loan-application.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -50,7 +51,8 @@ export function tokenGetter() {
     ApplicantDetailsComponent,
     UsersChartComponent,
     CreditorDetailsComponent,
-    LoanApplicationComponent
+    LoanApplicationComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

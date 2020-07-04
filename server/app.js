@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const { isAuth } = require("./middlewares/authMiddleware");
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/dashboard", isAuth, require("./routes/dashboardRoutes"));
 
 // database connection
 mongoose

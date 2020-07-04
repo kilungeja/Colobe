@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
-  constructor(private jwtHelper: JwtHelperService, private router: Router) {}
+  constructor(
+    private jwtHelper: JwtHelperService,
+    private authService: AuthService
+  ) {}
 
   canActivate() {
     const token = this.jwtHelper.tokenGetter();
@@ -12,7 +16,7 @@ export class AuthGuard implements CanActivate {
     if (token && !tokenExp) {
       return true;
     }
-    this.router.navigate(['/login']);
+    this.authService.logout();
     return false;
   }
 }

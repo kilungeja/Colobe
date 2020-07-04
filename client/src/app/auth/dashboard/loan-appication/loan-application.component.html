@@ -2,18 +2,39 @@
   <div class="col-12 bg-light shadow-lg">
     <div class="row py-3">
       <div class="col-md-6">
-        <div class=" rounded">
+        <app-spinner *ngIf="loading"></app-spinner>
+
+        <div class=" rounded" *ngIf="!loading">
           <h4 class="text-center text-muted">Apply for loan</h4>
-          <form action="#" class="w-75 mx-auto p-5 border">
+          <form
+            class="w-75 mx-auto p-5 border"
+            #loan="ngForm"
+            (submit)="onSubmit(loan)"
+          >
+            <ng-container *ngIf="err">
+              <div
+                class="alert alert-danger"
+                role="alert"
+                *ngFor="let er of err"
+              >
+                <strong><i class="fas fa-info mr-2"></i></strong> {{ er.msg }}
+              </div>
+            </ng-container>
+            <div class="alert alert-success" role="alert" *ngIf="success">
+              <strong><i class="fas fa-info mr-2"></i></strong> {{ success }}
+            </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">Tzsh</span>
               </div>
               <input
                 type="number"
+                name="amount"
+                ngModel
                 class="form-control"
                 placeholder="amount"
                 aria-describedby="basic-addon1"
+                required
               />
             </div>
             <div class="input-group mb-3">
@@ -22,7 +43,13 @@
                   ><i class="fas fa-calendar-check"></i
                 ></span>
               </div>
-              <input type="date" name="date" class="form-control" id="" />
+              <input
+                type="date"
+                name="date"
+                required
+                ngModel
+                class="form-control"
+              />
             </div>
             <button
               type="submit"
