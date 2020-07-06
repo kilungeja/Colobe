@@ -9,7 +9,27 @@ export class DashboardService {
   postLoan(loan) {
     return this.httpClient.post<{ msg: String }>(`${this.BASE_URL}/loan`, loan);
   }
+
+  updateLoan(loan): any {
+    return this.httpClient.patch<{ msg: String }>(
+      `${this.BASE_URL}/loan`,
+      loan
+    );
+  }
+
+  deleteLoan(loanId) {
+    return this.httpClient.delete(`${this.BASE_URL}/loan/${loanId}`);
+  }
+
   getLoans() {
     return this.httpClient.get<[Loan]>(`${this.BASE_URL}/loans`);
+  }
+
+  getLoan(id) {
+    return this.httpClient.get<Loan>(`${this.BASE_URL}/loan/${id}`);
+  }
+
+  getUserPendingLoan() {
+    return this.httpClient.get<Loan>(`${this.BASE_URL}/loan`);
   }
 }

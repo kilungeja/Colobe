@@ -70,7 +70,6 @@ router.post(
       .matches("[0-9]{8}/T.[0-9]{2}")
       .withMessage("Registration number must be valid")
       .trim()
-      .escape()
       .custom(async value => {
         let user = null;
         user = await User.findOne({ reg_no: value });

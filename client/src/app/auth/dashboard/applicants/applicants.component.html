@@ -1,7 +1,10 @@
 <div class="row mx-auto">
-  <div class="col-xl-6">
+  <div class="col-xl-6 mb-3">
     <app-spinner *ngIf="loading"></app-spinner>
-    <div class="card card-body  shadow-lg" *ngIf="!loading">
+    <div class="alert alert-danger" *ngIf="!loading && !loans" role="alert">
+      <strong><i class="fas fa-info mr-2"></i></strong> Something went wrong
+    </div>
+    <div class="card card-body  shadow-lg" *ngIf="!loading && loans">
       <h4 class="text-muted text-center mb-3">Loan applicants</h4>
       <p class="p-3" *ngIf="!loading && loans.length < 1">
         No applicants at the moment.
@@ -18,11 +21,11 @@
         <tbody>
           <tr *ngFor="let loan of loans; let i = index">
             <th scope="row">{{ i + 1 }}</th>
-            <td>@Jdoe</td>
+            <td>@{{ loan.applicant.username }}</td>
             <td>tzsh {{ loan.amount }}</td>
             <td>
               <a
-                [routerLink]="['/dashboard/applicants', 1]"
+                [routerLink]="['/dashboard/applicants', loan._id]"
                 class=" btn-details"
                 >Details<i class="fas fa-angle-double-right ml-2"></i
               ></a>

@@ -1,104 +1,98 @@
 <div class="row mx-auto">
-  <div class="col-12 bg-light shadow-lg">
-    <div class="row py-3">
-      <div class="col-md-6">
-        <app-spinner *ngIf="loading"></app-spinner>
+  <div class="col-12 bg-light mb-4 shadow-lg">
+    <div class="col-md-12">
+      <app-spinner *ngIf="loading"></app-spinner>
 
-        <div class=" rounded" *ngIf="!loading">
-          <h4 class="text-center text-muted">Apply for loan</h4>
-          <form
-            class="w-75 mx-auto p-5 border"
-            #loan="ngForm"
-            (submit)="onSubmit(loan)"
-          >
-            <ng-container *ngIf="err">
-              <div
-                class="alert alert-danger"
-                role="alert"
-                *ngFor="let er of err"
-              >
-                <strong><i class="fas fa-info mr-2"></i></strong> {{ er.msg }}
-              </div>
-            </ng-container>
-            <div class="alert alert-success" role="alert" *ngIf="success">
-              <strong><i class="fas fa-info mr-2"></i></strong> {{ success }}
+      <div class=" rounded py-3" *ngIf="!loading">
+        <h4 class="text-center text-muted mt-2">Apply for loan</h4>
+        <form
+          class="w-75 mx-auto p-5 border"
+          #loan="ngForm"
+          (submit)="onSubmit(loan)"
+        >
+          <ng-container *ngIf="err">
+            <div class="alert alert-danger" role="alert" *ngFor="let er of err">
+              <strong><i class="fas fa-info mr-2"></i></strong> {{ er.msg }}
             </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1">Tzsh</span>
-              </div>
-              <input
-                type="number"
-                name="amount"
-                ngModel
-                class="form-control"
-                placeholder="amount"
-                aria-describedby="basic-addon1"
-                required
-              />
+          </ng-container>
+          <div class="alert alert-success" role="alert" *ngIf="success">
+            <strong><i class="fas fa-info mr-2"></i></strong> {{ success }}
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">Tzsh</span>
             </div>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="basic-addon1"
-                  ><i class="fas fa-calendar-check"></i
-                ></span>
-              </div>
-              <input
-                type="date"
-                name="date"
-                required
-                ngModel
-                class="form-control"
-              />
+            <input
+              type="number"
+              name="amount"
+              [ngModel]="formStatus === 'update' ? userLoan.amount : ''"
+              class="form-control"
+              placeholder="amount"
+              aria-describedby="basic-addon1"
+              required
+            />
+          </div>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"
+                ><i class="fas fa-calendar-check"></i
+              ></span>
             </div>
-            <button
-              type="submit"
-              class="btn btn-outline-primary btn-block mt-3"
-            >
-              <i class="fas fa-paper-plane mr-2"></i>Apply
-            </button>
-          </form>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <h4 class="text-muted text-center mb-2">Loan history</h4>
-        <table class="table">
-          <thead class="bg-secondary text-white">
-            <tr>
-              <th scope="col"></th>
-              <th scope="col">Amount</th>
-              <th scope="col">Owing</th>
-              <th scope="col">Status</th>
-              <th scope="col">Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Tzsh 2500</td>
-              <td>@Jane</td>
-              <td>
-                <span class="badge badge-pill badge-warning">Not paid</span>
-              </td>
-              <td>12/03/2020</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Tzsh 2500</td>
-              <td>@Jane</td>
-              <td><span class="badge badge-pill badge-success">Paid</span></td>
-              <td>12/03/2020</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Tzsh 2500</td>
-              <td>@Jane</td>
-              <td><span class="badge badge-pill badge-success">Paid</span></td>
-              <td>12/03/2020</td>
-            </tr>
-          </tbody>
-        </table>
+            <input
+              type="date"
+              name="date"
+              required
+              [ngModel]="formStatus === 'update' ? loanDate : ''"
+              class="form-control"
+            />
+          </div>
+          <button type="submit" class="btn btn-outline-primary btn-block mt-3">
+            <i class="fas fa-paper-plane mr-2"></i
+            >{{ formStatus === "update" ? "Update" : "Apply" }}
+          </button>
+        </form>
       </div>
     </div>
+  </div>
+
+  <div class="col-12 bg-light p-4 shadow-lg">
+    <h4 class="text-muted text-center mb-2">Pending request</h4>
+    <p
+      class="p-2 bg-secondary text-center text-white rounded-pill"
+      *ngIf="!fetchLoan && !userLoan"
+    >
+      No pending request
+    </p>
+    <table class="table" *ngIf="!fetchLoan && userLoan">
+      <thead class="bg-secondary text-white">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Amount</th>
+          <th scope="col">Date</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Tzsh {{ userLoan.amount }}</td>
+
+          <td>{{ userLoan.date | date }}</td>
+          <td>
+            <i
+              class="fas fa-pencil-alt mr-4 text-secondary "
+              style="cursor: pointer"
+              (click)="onUpdate()"
+            ></i>
+            <i
+              class="fa fa-trash text-danger"
+              style="cursor: pointer"
+              aria-hidden="true"
+              (click)="onDelete()"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

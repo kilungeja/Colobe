@@ -32,6 +32,30 @@ exports.postLoan = async (req, res, next) => {
 };
 
 exports.getLoans = async (req, res, next) => {
-  const loans = await Loan.find();
-  res.json(loans);
+  try {
+    const loans = await Loan.find().populate("applicant");
+    res.json(loans);
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};
+
+exports.getLoan = async (req, res, next) => {
+  const { loanId } = req.params;
+  try {
+    const loan = await Loan.findById(loanId).populate("applicant");
+    res.json(loan);
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};
+
+exports.getUserPendingLoan = async (req, res, next) => {
+  const { userId } = req;
+  try {
+    const userLoan = await Loan.findOne({ applicant: userId });
+    res.json(userLoan);
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
 };
