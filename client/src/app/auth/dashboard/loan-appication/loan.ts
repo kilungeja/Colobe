@@ -4,6 +4,8 @@ export interface Loan {
   date: string;
   amount: number;
   applicant: Applicant;
+  debitor?: Applicant;
+  verifiedBy?: Applicant;
   createdAt: string;
   updatedAt: string;
   __v: number;
@@ -16,7 +18,6 @@ export interface Applicant {
   email: string;
   phone: string;
   reg_no: string;
-  password: string;
   created_at: string;
   __v: number;
 }

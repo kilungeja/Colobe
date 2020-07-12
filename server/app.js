@@ -19,7 +19,8 @@ app.use("/api/dashboard", isAuth, require("./routes/dashboardRoutes"));
 mongoose
   .connect(MONGO_URI, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
   })
   .then(() => {
     console.log("Database connected");

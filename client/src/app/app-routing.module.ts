@@ -14,6 +14,7 @@ import { ApplicantDetailsComponent } from './auth/dashboard/applicants/applicant
 import { CreditorDetailsComponent } from './auth/dashboard/creditors/creditor-details/creditor-details.component';
 import { LoanApplicationComponent } from './auth/dashboard/loan-appication/loan-application.component';
 import { AuthGuard } from './auth/auth-guard.service';
+import { LoanApplicationsComponent } from './auth/dashboard/loan-applications/loan-applications.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
       { path: 'assets', component: UserAssetsComponent },
       { path: 'settings', component: AccountSettingsComponent },
       { path: 'loan', component: LoanApplicationComponent },
+      { path: 'loan-applications', component: LoanApplicationsComponent },
       {
         path: 'applicants',
         component: ApplicantsComponent,

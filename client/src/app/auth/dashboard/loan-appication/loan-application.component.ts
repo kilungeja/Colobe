@@ -32,7 +32,6 @@ export class LoanApplicationComponent implements OnInit {
     this.dashService.getUserPendingLoan().subscribe(
       data => {
         this.fetchLoan = false;
-        console.log(data);
         this.userLoan = data;
       },
       (err: HttpErrorResponse) => {
@@ -61,7 +60,11 @@ export class LoanApplicationComponent implements OnInit {
     }
     this.loading = true;
     if (this.formStatus === 'update') {
-      this.action = this.dashService.updateLoan(loan.value);
+      this.action = this.dashService.updateLoan({
+        ...loan.value,
+        loanId: this.userLoan._id
+      });
+      this.formStatus = 'apply';
     } else {
       this.action = this.dashService.postLoan(loan.value);
     }
@@ -70,9 +73,9 @@ export class LoanApplicationComponent implements OnInit {
         this.loading = false;
         this.success = data.msg;
         setTimeout(() => (this.success = null), 3000);
+        this.getUserPendingRequest();
       },
       (err: HttpErrorResponse) => {
-        console.log();
         this.err.push({ msg: err.error.msg, id: 1 });
         setTimeout(() => (this.err = this.err.filter(er => er.id !== 1)), 3000);
         this.loading = false;
@@ -87,7 +90,7 @@ export class LoanApplicationComponent implements OnInit {
   onDelete() {
     this.dashService.deleteLoan(this.userLoan._id).subscribe(
       data => {
-        console.log(data);
+        this.getUserPendingRequest();
       },
       (err: HttpErrorResponse) => {
         console.log(err.error);

@@ -24,6 +24,15 @@ const loanSchema = new Schema(
     debitor: {
       type: mongoose.Types.ObjectId,
       ref: "User"
+    },
+    verifiedBy: {
+      type: mongoose.Types.ObjectId,
+      ref: "User"
+    },
+
+    confirmedBy: {
+      type: mongoose.Types.ObjectId,
+      ref: "User"
     }
   },
   { timestamps: true }

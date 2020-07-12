@@ -32,4 +32,29 @@ export class DashboardService {
   getUserPendingLoan() {
     return this.httpClient.get<Loan>(`${this.BASE_URL}/loan`);
   }
+
+  // debtor confirm lending
+  confirmLending(loanId) {
+    return this.httpClient.get<Loan>(`${this.BASE_URL}/confirm/${loanId}`);
+  }
+
+  // Admin request
+  getVerified() {
+    return this.httpClient.get<Loan[]>(`${this.BASE_URL}/verified`);
+  }
+
+  // on   verify
+  postVerified(loanId) {
+    return this.httpClient.get(`${this.BASE_URL}/verified/${loanId}`);
+  }
+
+  // on paid confirmaton
+  postPaidVerified(loanId) {
+    return this.httpClient.get(`${this.BASE_URL}/post-verified/${loanId}`);
+  }
+
+  // fetch all loans have been verified by admin/staff
+  fetchCVerifiedLoans() {
+    return this.httpClient.get<Loan[]>(`${this.BASE_URL}/post-verified`);
+  }
 }

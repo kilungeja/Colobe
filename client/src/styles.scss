@@ -6,17 +6,20 @@ body {
   height: 100vh;
   // overflow: hidden;
 }
+
+.hide-on-small {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
 #land-page {
   background: url(./assets/img/land-image.jpg) center center/cover;
   background-attachment: fixed;
   min-height: 100vh;
   position: relative;
   overflow: hidden;
-  .hide-on-small {
-    @media (max-width: 768px) {
-      display: none;
-    }
-  }
+
   .list-group li {
     background-color: transparent !important;
   }

@@ -58,11 +58,12 @@
   <div class="col-12 bg-light p-4 shadow-lg">
     <h4 class="text-muted text-center mb-2">Pending request</h4>
     <p
-      class="p-2 bg-secondary text-center text-white rounded-pill"
+      class="p-2 bg-secondary text-center text-white rounded-pill mt-5"
       *ngIf="!fetchLoan && !userLoan"
     >
       No pending request
     </p>
+    <app-spinner *ngIf="fetchLoan"></app-spinner>
     <table class="table" *ngIf="!fetchLoan && userLoan">
       <thead class="bg-secondary text-white">
         <tr>
