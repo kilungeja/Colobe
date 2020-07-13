@@ -28,7 +28,7 @@ const routes: Routes = [
     children: [
       { path: 'user-home', component: UserHomeComponent },
       { path: 'creditors', component: CreditorsComponent },
-      { path: 'creditors/:id', component: CreditorDetailsComponent },
+      { path: 'creditors/:id/:loanId', component: CreditorDetailsComponent },
       { path: 'assets', component: UserAssetsComponent },
       { path: 'settings', component: AccountSettingsComponent },
       { path: 'loan', component: LoanApplicationComponent },

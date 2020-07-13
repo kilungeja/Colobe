@@ -154,6 +154,31 @@ const sendEmail = async (to, subject, text) => {
   }
 };
 
+exports.getUserCreditors = async (req, res, next) => {
+  const { userId } = req;
+  try {
+    const loans = await Loan.find({ debitor: userId }).populate("applicant");
+
+    res.json(loans);
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};
+exports.getUserCreditorDetails = async (req, res, next) => {
+  const { userId } = req;
+  const { creditorId, loanId } = req.params;
+  try {
+    const loan = await Loan.findOne({
+      _id: loanId,
+      debitor: userId,
+      applicant: creditorId
+    }).populate("applicant");
+    res.json(loan);
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};
+
 // admin requests
 
 // get al loans that are confirmed by debtors

@@ -9,7 +9,9 @@ const {
   getVerified,
   postVerified,
   getPostVerified,
-  postPostVerified
+  postPostVerified,
+  getUserCreditors,
+  getUserCreditorDetails
 } = require("../controllers/dashboardController");
 
 const router = require("express").Router();
@@ -21,6 +23,8 @@ router.get("/loan", getUserPendingLoan);
 router.patch("/loan", updateLoan);
 router.delete("/loan/:id", deleteLoan);
 router.get("/confirm/:id", confirmLending);
+router.get("/creditors", getUserCreditors);
+router.get("/creditors/:creditorId/:loanId", getUserCreditorDetails);
 
 // admin requests
 router.get("/verified", getVerified);

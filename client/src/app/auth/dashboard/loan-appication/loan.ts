@@ -3,14 +3,14 @@ export interface Loan {
   _id: string;
   date: string;
   amount: number;
-  applicant: Applicant;
-  debitor?: Applicant;
-  verifiedBy?: Applicant;
+  applicant: User;
+  debitor?: User;
+  verifiedBy?: User;
   createdAt: string;
   updatedAt: string;
   __v: number;
 }
-export interface Applicant {
+export interface User {
   _id: string;
   firstname: string;
   lastname: string;

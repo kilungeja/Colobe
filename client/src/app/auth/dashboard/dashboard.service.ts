@@ -38,7 +38,17 @@ export class DashboardService {
     return this.httpClient.get<Loan>(`${this.BASE_URL}/confirm/${loanId}`);
   }
 
-  // Admin request
+  fetchCreditors() {
+    return this.httpClient.get<Loan[]>(`${this.BASE_URL}/creditors/`);
+  }
+
+  fetchCreditorDetails(creditorId: any, loanId) {
+    return this.httpClient.get<Loan>(
+      `${this.BASE_URL}/creditors/${creditorId}/${loanId}`
+    );
+  }
+
+  // Admin requests
   getVerified() {
     return this.httpClient.get<Loan[]>(`${this.BASE_URL}/verified`);
   }
