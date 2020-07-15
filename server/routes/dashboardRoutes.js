@@ -11,15 +11,18 @@ const {
   getPostVerified,
   postPostVerified,
   getUserCreditors,
-  getUserCreditorDetails
+  getUserCreditorDetails,
+  getUserAssets,
+  getUserCounts
 } = require("../controllers/dashboardController");
 
 const router = require("express").Router();
-
+router.get("/userhome-counts", getUserCounts);
 router.post("/loan", postLoan);
 router.get("/loan/:loanId", getLoan);
 router.get("/loans", getLoans);
 router.get("/loan", getUserPendingLoan);
+router.get("/assets", getUserAssets);
 router.patch("/loan", updateLoan);
 router.delete("/loan/:id", deleteLoan);
 router.get("/confirm/:id", confirmLending);

@@ -12,6 +12,7 @@ export interface Loan {
 }
 export interface User {
   _id: string;
+  assets?: number;
   firstname: string;
   lastname: string;
   username: string;

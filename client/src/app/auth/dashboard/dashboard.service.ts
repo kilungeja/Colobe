@@ -47,6 +47,22 @@ export class DashboardService {
       `${this.BASE_URL}/creditors/${creditorId}/${loanId}`
     );
   }
+  // userhome counts
+  getUserHomeCounts() {
+    return this.httpClient.get<{
+      assets: number;
+      applicants: number;
+      creditors: number;
+    }>(`${this.BASE_URL}/userhome-counts`);
+  }
+  // user assets
+  getUserAssets() {
+    return this.httpClient.get<{
+      total: number;
+      assets: Loan[];
+      liabilities: Loan[];
+    }>(`${this.BASE_URL}/assets`);
+  }
 
   // Admin requests
   getVerified() {

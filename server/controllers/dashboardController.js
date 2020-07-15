@@ -9,6 +9,7 @@ const client = require("twilio")(
 );
 
 const Loan = require("../models/Loan");
+const User = require("../models/User");
 exports.postLoan = async (req, res, next) => {
   const date = new Date(req.body.date);
   const { userId } = req;
@@ -119,6 +120,48 @@ exports.confirmLending = async (req, res, next) => {
   }
 };
 
+// getting logged user assets
+exports.getUserAssets = async (req, res, next) => {
+  const { userId } = req;
+  try {
+    loan = await Promise.all([
+      Loan.find({ debitor: userId }).populate("applicant"),
+      Loan.find({ applicant: userId }).populate("debitor"),
+      User.findById(userId)
+    ]);
+    const creditors = loan[0];
+    const debitors = loan[1];
+    const user = loan[2];
+    const data = {
+      total: user.assets,
+      assets: creditors,
+      liabilities: debitors
+    };
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};
+
+exports.getUserCounts = async (req, res, next) => {
+  const { userId } = req;
+  try {
+    const promises = await Promise.all([
+      User.findById(userId),
+      Loan.countDocuments({ loanStatus: "pending" }),
+      Loan.countDocuments({ debitor: userId })
+    ]);
+    const data = {
+      applicants: promises[1],
+      assets: promises[0].assets,
+      creditors: promises[2]
+    };
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};
+
 const sendAdminText = () => {
   client.messages
     .create({
@@ -157,7 +200,10 @@ const sendEmail = async (to, subject, text) => {
 exports.getUserCreditors = async (req, res, next) => {
   const { userId } = req;
   try {
-    const loans = await Loan.find({ debitor: userId }).populate("applicant");
+    const loans = await Loan.find({
+      debitor: userId,
+      loanStatus: "Not paid"
+    }).populate("applicant");
 
     res.json(loans);
   } catch (error) {
@@ -199,7 +245,13 @@ exports.postVerified = async (req, res, next) => {
 
   const { userId } = req;
   try {
-    let updatedLoan = await Loan.findById(loanId);
+    let updatedLoan = await Loan.findById(loanId)
+      .populate("applicant")
+      .populate("debitor");
+    updatedLoan.applicant.assets -= updatedLoan.amount;
+    await updatedLoan.applicant.save();
+    updatedLoan.debitor.assets += updatedLoan.amount;
+    await updatedLoan.debitor.save();
     updatedLoan.verifiedBy = userId;
     updatedLoan.loanStatus = "Not paid";
     updatedLoan = await updatedLoan.save();

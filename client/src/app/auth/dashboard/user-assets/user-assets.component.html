@@ -1,64 +1,45 @@
 <div class="row mx-auto">
   <div class="card card-body shadow-lg">
     <h4 class="text-muted text-center mb-3">Your assets</h4>
-    <div class="row pt-3">
+    <div class="row pt-3  px-4">
       <div class="col-4">
         <p class="text-center m-auto">
           <i class="fas fa-credit-card fa-9x text-primary"></i>
         </p>
       </div>
-      <div id="total_assets" class="col-8 p-4 border">
-        <div class="mb-1">
+      <div class="col-8 text-center" *ngIf="loading">
+        <app-spinner></app-spinner>
+      </div>
+      <div
+        id="total_assets"
+        *ngIf="!loading && userData"
+        class="col-8 p-4 border"
+      >
+        <div class="mb-1" *ngIf="userData.assets.length > 0">
           <h6 class="text-muted pt-3">Your assets</h6>
-          <div class="d-flex justify-content-between align-content-center px-5">
+          <div
+            class="d-flex justify-content-between align-content-center px-5"
+            *ngFor="let ast of userData.assets"
+          >
             <div>
-              <p class="text-muted">Jdoe</p>
+              <p class="text-muted">{{ ast.applicant.username }}</p>
             </div>
             <div>
-              <em>Tzsh 25,000</em>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-content-center px-5">
-            <div>
-              <p class="text-muted">Kilungeja</p>
-            </div>
-            <div>
-              <em>Tzsh 10,000</em>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-content-center px-5">
-            <div>
-              <p class="text-muted">Tumpale</p>
-            </div>
-            <div>
-              <em>Tzsh 50,000</em>
+              <em>Tzsh {{ ast.amount }}</em>
             </div>
           </div>
         </div>
-        <div class="mb-1">
+        <div class="mb-1" *ngIf="userData.liabilities.length > 0">
           <h6 class="text-muted pt-3">Your liabilities</h6>
-          <div class="d-flex justify-content-between align-content-center px-5">
+          <div
+            class="d-flex justify-content-between align-content-center px-5"
+            *ngFor="let lia of userData.liabilities"
+          >
             <div>
-              <p class="text-muted">Jdoe</p>
+              <p class="text-muted">{{ lia.debitor.username }}</p>
             </div>
             <div>
-              <em>Tzsh 25,000</em>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-content-center px-5">
-            <div>
-              <p class="text-muted">Kilungeja</p>
-            </div>
-            <div>
-              <em>Tzsh 10,000</em>
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-content-center px-5">
-            <div>
-              <p class="text-muted">Tumpale</p>
-            </div>
-            <div>
-              <em>Tzsh 50,000</em>
+              <em>Tzsh {{ lia.amount }}</em>
             </div>
           </div>
         </div>
@@ -66,7 +47,9 @@
           class="total_assets d-flex justify-content-between align-content-center pr-5"
         >
           <h6>Total assets</h6>
-          <em>Tzsh 0</em>
+          <strong class="text-{{ userData.total < 0 ? 'danger' : 'primary' }}"
+            >Tzsh {{ userData.total }}</strong
+          >
         </div>
       </div>
     </div>
