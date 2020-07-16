@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { User } from './dashboard/loan-appication/loan';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -54,5 +55,14 @@ export class AuthService {
   logout() {
     localStorage.removeItem('access_token');
     this.route.navigate(['/login']);
+  }
+
+  fetchLoggedInUser() {
+    return this.httpClient.get<User>(`${this.BASE_URL}/fetch-user`);
+  }
+  updateUser(userData) {
+    return this.httpClient.patch<{ msg: string }>(`${this.BASE_URL}/update`, {
+      ...userData
+    });
   }
 }

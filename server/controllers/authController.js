@@ -89,3 +89,28 @@ exports.postRegister = (req, res, next) => {
       console.log(err);
     });
 };
+
+exports.getLoggedInUser = async (req, res, next) => {
+  const { userId } = req;
+  try {
+    const user = await User.findById(userId);
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};
+
+exports.updateUser = async (req, res, next) => {
+  let err = validationResult(req);
+  let errors = err.array();
+  if (!err.isEmpty()) {
+    return res.status(422).json({ msg: "Validation error", errors });
+  }
+  const { userId } = req;
+  try {
+    await User.findByIdAndUpdate(userId, req.body);
+    res.json({ msg: "Your information is updated successully" });
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};

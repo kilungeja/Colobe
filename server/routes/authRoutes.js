@@ -3,7 +3,14 @@ const { body } = require("express-validator");
 
 const User = require("../models/User");
 
-const { postLogin, postRegister } = require("../controllers/authController");
+const { isAuth } = require("../middlewares/authMiddleware");
+
+const {
+  postLogin,
+  postRegister,
+  getLoggedInUser,
+  updateUser
+} = require("../controllers/authController");
 
 router.post(
   "/login",
@@ -103,6 +110,48 @@ router.post(
       .escape()
   ],
   postRegister
+);
+
+router.get("/fetch-user", isAuth, getLoggedInUser);
+router.patch(
+  "/update",
+  isAuth,
+  [
+    body("firstname", "Firstname field should not be empty")
+      .not()
+      .isEmpty()
+      .trim()
+      .matches("^[A-Za-z]+$")
+      .withMessage("Firstname should be a valid string")
+      .escape(),
+    body("lastname", "Lastname field should not be empty")
+      .not()
+      .isEmpty()
+      .trim()
+      .matches("^[A-Za-z]+$")
+      .withMessage("Lastname should be a valid string")
+      .escape(),
+    body("email")
+      .not()
+      .isEmpty()
+      .withMessage("Email field should not be empty")
+      .isEmail()
+      .withMessage("E-mail address should be valid")
+
+      .trim()
+      .escape(),
+    body("username", "Username field should not be empty")
+      .not()
+      .isEmpty()
+      .trim()
+      .escape(),
+    body("phone", "Phone number field should not be empty")
+      .not()
+      .isEmpty()
+      .trim()
+      .escape()
+  ],
+  updateUser
 );
 
 module.exports = router;

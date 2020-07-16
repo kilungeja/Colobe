@@ -9,7 +9,6 @@ exports.isAuth = (req, res, next) => {
   }
   jwt.verify(token, "superlongsecretword", function(err, decoded) {
     if (err) {
-      console.log(err);
       return res.status(401).json({ msg: "Not authorized" });
     }
     const {

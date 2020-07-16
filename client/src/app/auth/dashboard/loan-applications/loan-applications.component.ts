@@ -40,7 +40,6 @@ export class LoanApplicationsComponent implements OnInit {
         this.loandingVerified = false;
       },
       (err: HttpErrorResponse) => {
-        console.log(err.error);
         this.loandingVerified = false;
       }
     );
@@ -48,7 +47,6 @@ export class LoanApplicationsComponent implements OnInit {
   onVerify(loanId) {
     this.dashService.postVerified(loanId).subscribe(
       data => {
-        console.log(data);
         this.fetchCVerifyLoans();
       },
       (err: HttpErrorResponse) => {
@@ -59,7 +57,6 @@ export class LoanApplicationsComponent implements OnInit {
   onPaid(loanId) {
     this.dashService.postPaidVerified(loanId).subscribe(
       data => {
-        console.log(data);
         this.fetchCVerifyLoans();
       },
       (err: HttpErrorResponse) => {

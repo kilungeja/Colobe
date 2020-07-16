@@ -282,7 +282,13 @@ exports.postPostVerified = async (req, res, next) => {
 
   const { userId } = req;
   try {
-    let updatedLoan = await Loan.findById(loanId);
+    let updatedLoan = await Loan.findById(loanId)
+      .populate("applicant")
+      .populate("debitor");
+    updatedLoan.applicant.assets += updatedLoan.amount;
+    await updatedLoan.applicant.save();
+    updatedLoan.debitor.assets -= updatedLoan.amount;
+    await updatedLoan.debitor.save();
     updatedLoan.loanStatus = "Paid";
     updatedLoan = await updatedLoan.save();
     res.json({ msg: "Verified Paid successflly" });
