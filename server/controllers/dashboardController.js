@@ -125,8 +125,12 @@ exports.getUserAssets = async (req, res, next) => {
   const { userId } = req;
   try {
     loan = await Promise.all([
-      Loan.find({ debitor: userId }).populate("applicant"),
-      Loan.find({ applicant: userId }).populate("debitor"),
+      Loan.find({ debitor: userId, loanStatus: "Not paid" }).populate(
+        "applicant"
+      ),
+      Loan.find({ applicant: userId, loanStatus: "Not paid" }).populate(
+        "debitor"
+      ),
       User.findById(userId)
     ]);
     const creditors = loan[0];
@@ -149,7 +153,7 @@ exports.getUserCounts = async (req, res, next) => {
     const promises = await Promise.all([
       User.findById(userId),
       Loan.countDocuments({ loanStatus: "pending" }),
-      Loan.countDocuments({ debitor: userId })
+      Loan.countDocuments({ debitor: userId, loanStatus: "Not paid" })
     ]);
     const data = {
       applicants: promises[1],
@@ -292,6 +296,19 @@ exports.postPostVerified = async (req, res, next) => {
     updatedLoan.loanStatus = "Paid";
     updatedLoan = await updatedLoan.save();
     res.json({ msg: "Verified Paid successflly" });
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};
+
+// get loans that have been paid
+exports.getPaidLoans = async (req, res, next) => {
+  try {
+    const loans = await Loan.find({ loanStatus: "Paid" })
+      .populate("applicant")
+      .populate("debitor")
+      .populate("verifiedBy");
+    res.json(loans);
   } catch (error) {
     res.status(500).json({ msg: "Server error" });
   }

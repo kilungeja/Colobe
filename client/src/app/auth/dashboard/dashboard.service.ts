@@ -42,6 +42,10 @@ export class DashboardService {
     return this.httpClient.get<Loan[]>(`${this.BASE_URL}/creditors/`);
   }
 
+  fetchPaidLoans() {
+    return this.httpClient.get<Loan[]>(`${this.BASE_URL}/paid-loans/`);
+  }
+
   fetchCreditorDetails(creditorId: any, loanId) {
     return this.httpClient.get<Loan>(
       `${this.BASE_URL}/creditors/${creditorId}/${loanId}`

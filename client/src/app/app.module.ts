@@ -27,6 +27,7 @@ import { CreditorDetailsComponent } from './auth/dashboard/creditors/creditor-de
 import { LoanApplicationComponent } from './auth/dashboard/loan-appication/loan-application.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { LoanApplicationsComponent } from './auth/dashboard/loan-applications/loan-applications.component';
+import { LoanPaidComponent } from './auth/dashboard/loan-applications/loan-paid/loan-paid.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -54,7 +55,8 @@ export function tokenGetter() {
     CreditorDetailsComponent,
     LoanApplicationComponent,
     SpinnerComponent,
-    LoanApplicationsComponent
+    LoanApplicationsComponent,
+    LoanPaidComponent
   ],
   imports: [
     BrowserModule,
