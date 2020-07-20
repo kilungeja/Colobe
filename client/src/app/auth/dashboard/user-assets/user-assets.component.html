@@ -25,7 +25,11 @@
               <p class="text-muted">{{ ast.applicant.username }}</p>
             </div>
             <div>
-              <em>Tzsh {{ ast.amount }}</em>
+              <em
+                >Tzsh {{ ast.amount.toFixed(2) }} + ({{
+                  ast.interest.toFixed(2)
+                }})</em
+              >
             </div>
           </div>
         </div>
@@ -39,7 +43,10 @@
               <p class="text-muted">{{ lia.debitor.username }}</p>
             </div>
             <div>
-              <em>Tzsh {{ lia.amount }}</em>
+              <em
+                >Tzsh {{ lia.amount.toFixed(2) }} + (
+                {{ lia.interest.toFixed(2) }} )</em
+              >
             </div>
           </div>
         </div>
@@ -48,7 +55,7 @@
         >
           <h6>Total assets</h6>
           <strong class="text-{{ userData.total < 0 ? 'danger' : 'primary' }}"
-            >Tzsh {{ userData.total }}</strong
+            >Tzsh {{ userData.total.toFixed(2) }}</strong
           >
         </div>
       </div>

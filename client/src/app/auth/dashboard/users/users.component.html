@@ -31,10 +31,16 @@
             <td>{{ user.reg_no }}</td>
             <td>{{ user.phone }}</td>
             <td *ngIf="user.assets < 0">
-              owed <span class="badge badge-danger"> {{ user.assets }}</span>
+              owed
+              <span class="badge badge-danger">
+                {{ user.assets.toFixed(2) }}</span
+              >
             </td>
             <td *ngIf="user.assets > 0">
-              owe <span class="badge badge-success"> {{ user.assets }}</span>
+              owe
+              <span class="badge badge-success">
+                {{ user.assets.toFixed(2) }}</span
+              >
             </td>
             <td *ngIf="user.assets === 0">
               <span class="badge"> {{ user.assets }}</span>

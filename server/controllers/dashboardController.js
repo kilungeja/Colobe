@@ -1,15 +1,7 @@
-const nodemailer = require("nodemailer");
-
-const client = require("twilio")(
-  process.env.TWILIO_ACCOUNT_SID,
-  process.env.TWILIO_AUTH_TOKEN,
-  {
-    lazyLoading: true
-  }
-);
-
 const Loan = require("../models/Loan");
 const User = require("../models/User");
+const { sendAdminText, sendEmail, calculateInterest } = require("../helpers");
+
 exports.postLoan = async (req, res, next) => {
   const date = new Date(req.body.date);
   const { userId } = req;
@@ -103,6 +95,8 @@ exports.confirmLending = async (req, res, next) => {
     let updatedLoan = await Loan.findById(id).populate("applicant");
     updatedLoan.debitor = userId;
     updatedLoan = await updatedLoan.save();
+    updatedLoan.interest = getInterest(updatedLoan.amount, updatedLoan.date);
+    updatedLoan = await updatedLoan.save();
     const { email } = updatedLoan.applicant;
 
     // sending email to loan applicant
@@ -116,8 +110,15 @@ exports.confirmLending = async (req, res, next) => {
     // sending sms to admin to confirm the transaction
     sendAdminText();
   } catch (error) {
+    console.log(error);
     res.status(500).json({ msg: "Server error" });
   }
+};
+const getInterest = (amount, loanDate) => {
+  return calculateInterest(amount, days(loanDate), 0.02, 2) - amount;
+};
+const days = loanDate => {
+  return (new Date(loanDate).getTime() - Date.now()) / (1000 * 60 * 60 * 24);
 };
 
 // getting logged user assets
@@ -163,41 +164,6 @@ exports.getUserCounts = async (req, res, next) => {
     res.json(data);
   } catch (error) {
     res.status(500).json({ msg: "Server error" });
-  }
-};
-
-const sendAdminText = () => {
-  client.messages
-    .create({
-      body: "Login to verify a loan !",
-      from: process.env.TWILIO_NO,
-      to: process.env.ADMIN_NO
-    })
-    .then()
-    .catch(err => console.log(err));
-};
-
-const sendEmail = async (to, subject, text) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAL,
-      pass: process.env.E_PWD
-    }
-  });
-
-  const options = {
-    from: "colobe.email.com",
-    to,
-    subject,
-    text
-  };
-
-  try {
-    const res = await transporter.sendMail(options);
-    return res;
-  } catch (error) {
-    console.log(error);
   }
 };
 
@@ -252,13 +218,19 @@ exports.postVerified = async (req, res, next) => {
     let updatedLoan = await Loan.findById(loanId)
       .populate("applicant")
       .populate("debitor");
-    updatedLoan.applicant.assets -= updatedLoan.amount;
+    updatedLoan.applicant.assets -= updatedLoan.amount + updatedLoan.interest;
     await updatedLoan.applicant.save();
-    updatedLoan.debitor.assets += updatedLoan.amount;
+    updatedLoan.debitor.assets +=
+      updatedLoan.amount + updatedLoan.interest * 0.7;
     await updatedLoan.debitor.save();
     updatedLoan.verifiedBy = userId;
     updatedLoan.loanStatus = "Not paid";
     updatedLoan = await updatedLoan.save();
+
+    // adding 30% to admin account
+    let admin = await User.findById(userId);
+    admin.assets += updatedLoan.interest * 0.3;
+    await admin.save();
     console.log(updatedLoan);
     res.json({ msg: "Verified successflly" });
   } catch (error) {
@@ -289,9 +261,10 @@ exports.postPostVerified = async (req, res, next) => {
     let updatedLoan = await Loan.findById(loanId)
       .populate("applicant")
       .populate("debitor");
-    updatedLoan.applicant.assets += updatedLoan.amount;
+    updatedLoan.applicant.assets += updatedLoan.amount + updatedLoan.interest;
     await updatedLoan.applicant.save();
-    updatedLoan.debitor.assets -= updatedLoan.amount;
+    updatedLoan.debitor.assets -=
+      updatedLoan.amount + updatedLoan.interest * 0.7;
     await updatedLoan.debitor.save();
     updatedLoan.loanStatus = "Paid";
     updatedLoan = await updatedLoan.save();

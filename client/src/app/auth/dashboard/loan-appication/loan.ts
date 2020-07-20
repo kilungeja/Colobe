@@ -3,6 +3,7 @@ export interface Loan {
   _id: string;
   date: string;
   amount: number;
+  interest?: number;
   applicant: User;
   debitor?: User;
   verifiedBy?: User;

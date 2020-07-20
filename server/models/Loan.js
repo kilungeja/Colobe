@@ -8,6 +8,10 @@ const loanSchema = new Schema(
       type: Number,
       required: true
     },
+    interest: {
+      type: Number,
+      default: 0
+    },
     date: {
       type: String,
       required: true

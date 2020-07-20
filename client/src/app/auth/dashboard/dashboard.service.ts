@@ -95,4 +95,13 @@ export class DashboardService {
   fetchCVerifiedLoans() {
     return this.httpClient.get<Loan[]>(`${this.BASE_URL}/post-verified`);
   }
+
+  calculateInterest = (amount, days, interest, roundToPlaces): number => {
+    let total = amount;
+    for (let i = 1; i <= days; i++) {
+      const percent = total * interest;
+      total += percent;
+    }
+    return total.toFixed(roundToPlaces);
+  };
 }

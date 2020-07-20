@@ -29,7 +29,6 @@ export class ApplicantDetailsComponent implements OnInit {
         data => {
           this.loading = false;
           this.loanDetail = data;
-          console.log(this.samePerson);
         },
         (err: HttpErrorResponse) => {
           this.loading = false;
@@ -50,6 +49,25 @@ export class ApplicantDetailsComponent implements OnInit {
         this.confirming = false;
       }
     );
+  }
+
+  get days() {
+    return (
+      (new Date(this.loanDetail.date).getTime() - Date.now()) /
+      (1000 * 60 * 60 * 24)
+    );
+  }
+
+  get withInterest() {
+    let result = this.dashService.calculateInterest(
+      this.loanDetail.amount,
+      this.days,
+      0.02,
+      2
+    );
+
+    const netInterest = (result - this.loanDetail.amount) * 0.7;
+    return netInterest + this.loanDetail.amount;
   }
 
   get samePerson() {

@@ -19,12 +19,10 @@ export class CreditorsComponent implements OnInit {
     this.dashService.fetchCreditors().subscribe(
       data => {
         this.loading = false;
-        console.log(data);
         this.creditors = data;
       },
       (err: HttpErrorResponse) => {
         this.loading = false;
-        console.log(err.error);
       }
     );
   }
