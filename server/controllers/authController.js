@@ -24,7 +24,8 @@ exports.postLogin = async (req, res, next) => {
     }
     const data = {
       _id: user._id,
-      username: user.username
+      username: user.username,
+      isAdmin: user.isAdmin
     };
     const token = jwt.sign(
       {
@@ -110,6 +111,15 @@ exports.updateUser = async (req, res, next) => {
   try {
     await User.findByIdAndUpdate(userId, req.body);
     res.json({ msg: "Your information is updated successully" });
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};
+
+exports.getUsers = async (req, res, next) => {
+  try {
+    const users = await User.find({ isAdmin: false }).select("-password");
+    res.json(users);
   } catch (error) {
     res.status(500).json({ msg: "Server error" });
   }

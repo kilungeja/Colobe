@@ -1,0 +1,47 @@
+<div class="row mx-auto">
+  <div class="col-12 mb-3">
+    <app-spinner *ngIf="loading"></app-spinner>
+    <div class="alert alert-danger" role="alert" *ngIf="!loading && !users">
+      <strong><i class="fas fa-info mr-2"></i></strong> Something went wrong
+    </div>
+    <div class="card card-body  shadow-lg" *ngIf="!loading && users">
+      <h4 class="text-muted text-center mb-3">Loan applicants</h4>
+      <p
+        class="p-2 bg-secondary text-center text-white rounded-pill"
+        *ngIf="users.length < 1"
+      >
+        No users at the moment.
+      </p>
+      <table class="table" *ngIf="users.length > 0">
+        <thead class="bg-secondary text-light">
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Fullname</th>
+            <th scope="col">Username</th>
+            <th scope="col">reg no</th>
+            <th scope="col">Phone number</th>
+            <th scope="col">Loan</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users; let i = index">
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{ user.firstname }} {{ user.lastname }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.reg_no }}</td>
+            <td>{{ user.phone }}</td>
+            <td *ngIf="user.assets < 0">
+              owed <span class="badge badge-danger"> {{ user.assets }}</span>
+            </td>
+            <td *ngIf="user.assets > 0">
+              owe <span class="badge badge-success"> {{ user.assets }}</span>
+            </td>
+            <td *ngIf="user.assets === 0">
+              <span class="badge"> {{ user.assets }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -313,3 +313,21 @@ exports.getPaidLoans = async (req, res, next) => {
     res.status(500).json({ msg: "Server error" });
   }
 };
+
+exports.getAdminCounts = async (req, res, next) => {
+  try {
+    const promises = await Promise.all([
+      User.countDocuments({ isAdmin: false }),
+      User.findById(req.userId),
+      Loan.countDocuments({ loanStatus: "pending", debitor: { $ne: null } })
+    ]);
+    const data = {
+      users: promises[0],
+      assets: promises[1].assets,
+      requests: promises[2]
+    };
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ msg: "Server error" });
+  }
+};

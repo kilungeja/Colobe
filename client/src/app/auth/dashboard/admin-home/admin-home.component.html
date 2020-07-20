@@ -1,0 +1,61 @@
+<div class="row mx-auto">
+  <div class="col-12" *ngIf="loading">
+    <app-spinner></app-spinner>
+  </div>
+  <ng-container *ngIf="!loading && counts">
+    <div class="col-md-4">
+      <div class="card card-body bg-light text-dark shadow-lg">
+        <p class="h3 text-muted text-center">Pending requests</p>
+        <div class="d-flex justify-content-between align-content-center">
+          <i class="fas fa-users fa-4x text-secondary"></i>
+          <p class="count text-muted">
+            {{ counts.requests }}
+          </p>
+        </div>
+        <a
+          [routerLink]="['/dashboard/loan-applications']"
+          class="btn btn-outline-secondary block mt-4"
+          >Details <i class="fas fa-angle-right ml-2"></i
+        ></a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-body bg-light text-dark shadow-lg">
+        <p class="h3 text-muted text-center">Assets</p>
+        <div class="d-flex justify-content-between align-content-center">
+          <i class="fas fa-credit-card fa-4x text-secondary"></i>
+          <p class="count text-muted">
+            <small> {{ counts.assets }}</small> Tzsh
+          </p>
+        </div>
+        <a
+          [routerLink]="['/dashboard/assets']"
+          class="btn btn-outline-secondary block mt-4"
+          >Details<i class="fas fa-angle-right ml-2"></i
+        ></a>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card card-body bg-light text-dark shadow-lg">
+        <p class="h3 text-muted text-center">Total users</p>
+        <div class="d-flex justify-content-between align-content-center">
+          <i class="fas fa-money-check-alt fa-4x text-secondary"></i>
+          <p class="count text-muted">
+            {{ counts.users }}
+          </p>
+        </div>
+        <a
+          [routerLink]="['/dashboard/creditors']"
+          class="btn btn-outline-secondary block mt-4"
+          >Details<i class="fas fa-angle-right ml-2"></i
+        ></a>
+      </div>
+    </div>
+  </ng-container>
+
+  <div class="col-12">
+    <div class="card card-body shadow-lg mt-3 ">
+      <app-users-chart></app-users-chart>
+    </div>
+  </div>
+</div>

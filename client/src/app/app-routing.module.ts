@@ -16,6 +16,9 @@ import { LoanApplicationComponent } from './auth/dashboard/loan-appication/loan-
 import { AuthGuard } from './auth/auth-guard.service';
 import { LoanApplicationsComponent } from './auth/dashboard/loan-applications/loan-applications.component';
 import { LoanPaidComponent } from './auth/dashboard/loan-applications/loan-paid/loan-paid.component';
+import { RoleGuard } from './auth/roles-guard.service.';
+import { AdminHomeComponent } from './auth/dashboard/admin-home/admin-home.component';
+import { UsersComponent } from './auth/dashboard/users/users.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -28,13 +31,27 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: 'user-home', component: UserHomeComponent },
+      {
+        path: 'admin-home',
+        component: AdminHomeComponent,
+        canActivate: [RoleGuard]
+      },
+      { path: 'users', component: UsersComponent, canActivate: [RoleGuard] },
       { path: 'creditors', component: CreditorsComponent },
       { path: 'creditors/:id/:loanId', component: CreditorDetailsComponent },
       { path: 'assets', component: UserAssetsComponent },
       { path: 'settings', component: AccountSettingsComponent },
       { path: 'loan', component: LoanApplicationComponent },
-      { path: 'loan-applications', component: LoanApplicationsComponent },
-      { path: 'loan-paid', component: LoanPaidComponent },
+      {
+        path: 'loan-applications',
+        component: LoanApplicationsComponent,
+        canActivate: [RoleGuard]
+      },
+      {
+        path: 'loan-paid',
+        component: LoanPaidComponent,
+        canActivate: [RoleGuard]
+      },
       {
         path: 'applicants',
         component: ApplicantsComponent,

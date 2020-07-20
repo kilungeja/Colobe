@@ -28,6 +28,8 @@ import { LoanApplicationComponent } from './auth/dashboard/loan-appication/loan-
 import { SpinnerComponent } from './spinner/spinner.component';
 import { LoanApplicationsComponent } from './auth/dashboard/loan-applications/loan-applications.component';
 import { LoanPaidComponent } from './auth/dashboard/loan-applications/loan-paid/loan-paid.component';
+import { AdminHomeComponent } from './auth/dashboard/admin-home/admin-home.component';
+import { UsersComponent } from './auth/dashboard/users/users.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -46,6 +48,7 @@ export function tokenGetter() {
     RegisterComponent,
     DashboardComponent,
     UserHomeComponent,
+    AdminHomeComponent,
     CreditorsComponent,
     UserAssetsComponent,
     AccountSettingsComponent,
@@ -56,7 +59,8 @@ export function tokenGetter() {
     LoanApplicationComponent,
     SpinnerComponent,
     LoanApplicationsComponent,
-    LoanPaidComponent
+    LoanPaidComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

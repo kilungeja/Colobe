@@ -32,16 +32,22 @@ export class AuthService {
       .pipe(
         tap(data => {
           localStorage.setItem('access_token', data.token);
-          this.route.navigate(['/dashboard/user-home']);
+          if (this.getDecodedToken().data.isAdmin) {
+            this.route.navigate(['/dashboard/admin-home']);
+          } else {
+            this.route.navigate(['/dashboard/user-home']);
+          }
           this.autoLogout(3600000);
         })
       );
   }
 
+  getDecodedToken() {
+    return this.jwtHelper.decodeToken(this.jwtHelper.tokenGetter());
+  }
+
   get username() {
-    const decodedToken = this.jwtHelper.decodeToken(
-      this.jwtHelper.tokenGetter()
-    );
+    const decodedToken = this.getDecodedToken();
     if (!decodedToken) {
       return false;
     }
@@ -64,5 +70,10 @@ export class AuthService {
     return this.httpClient.patch<{ msg: string }>(`${this.BASE_URL}/update`, {
       ...userData
     });
+  }
+
+  // geting all users minus admin
+  fetchUsers() {
+    return this.httpClient.get<User[]>(`${this.BASE_URL}/users`);
   }
 }

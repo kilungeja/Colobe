@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Loan } from './loan-appication/loan';
+import { Loan, User } from './loan-appication/loan';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
@@ -71,6 +71,14 @@ export class DashboardService {
   // Admin requests
   getVerified() {
     return this.httpClient.get<Loan[]>(`${this.BASE_URL}/verified`);
+  }
+
+  fetchAdmnCounts() {
+    return this.httpClient.get<{
+      assets: number;
+      requests: number;
+      users: number;
+    }>(`${this.BASE_URL}/adminhome-counts`);
   }
 
   // on   verify

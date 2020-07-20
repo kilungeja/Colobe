@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DashboardService } from '../../dashboard.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Loan } from '../../loan-appication/loan';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-applicant-details',
@@ -15,7 +16,8 @@ export class ApplicantDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private dashService: DashboardService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -27,10 +29,10 @@ export class ApplicantDetailsComponent implements OnInit {
         data => {
           this.loading = false;
           this.loanDetail = data;
+          console.log(this.samePerson);
         },
         (err: HttpErrorResponse) => {
           this.loading = false;
-          console.log(err.error);
         }
       );
     });
@@ -45,9 +47,15 @@ export class ApplicantDetailsComponent implements OnInit {
         this.confirming = false;
       },
       (err: HttpErrorResponse) => {
-        console.log(err.error);
         this.confirming = false;
       }
+    );
+  }
+
+  get samePerson() {
+    return (
+      this.authService.getDecodedToken().data._id ===
+      this.loanDetail.applicant._id
     );
   }
 }

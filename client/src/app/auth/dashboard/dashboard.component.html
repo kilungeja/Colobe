@@ -5,15 +5,13 @@
       <div class="overlay"></div>
       <ul class="nav flex-column">
         <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link " routerLink="/dashboard/user-home"
+          <a
+            class="nav-link "
+            [routerLink]="
+              isAdmin ? '/dashboard/admin-home' : '/dashboard/user-home'
+            "
             ><i class="fas fa-sliders-h mr-2"></i>
             <span class="hide-on-small ">Home</span>
-          </a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/dashboard/creditors"
-            ><i class="fas fa-chart-line mr-2"></i
-            ><span class="hide-on-small ">Creditors</span>
           </a>
         </li>
 
@@ -23,36 +21,53 @@
             <span class="hide-on-small ">Assets</span>
           </a>
         </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/dashboard/applicants"
-            ><i class="fas fa-user-friends mr-2"></i
-            ><span class="hide-on-small ">Applicants</span>
-          </a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="/dashboard/loan"
-            ><i class="fas fa-hand-holding mr-2"></i
-            ><span class="hide-on-small ">Apply for loan</span>
-          </a>
-        </li>
+
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link " routerLink="/dashboard/settings"
             ><i class="fas fa-user-cog mr-2"></i
             ><span class="hide-on-small ">Account settings</span>
           </a>
         </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link " routerLink="/dashboard/loan-applications"
-            ><i class="fas fa-user-cog mr-2"></i
-            ><span class="hide-on-small ">Loan applications</span>
-          </a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link " routerLink="/dashboard/loan-paid"
-            ><i class="fas fa-user-cog mr-2"></i
-            ><span class="hide-on-small ">Paid loans</span>
-          </a>
-        </li>
+        <ng-container *ngIf="!isAdmin">
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/dashboard/creditors"
+              ><i class="fas fa-chart-line mr-2"></i
+              ><span class="hide-on-small ">Creditors</span>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/dashboard/applicants"
+              ><i class="fas fa-user-friends mr-2"></i
+              ><span class="hide-on-small ">Applicants</span>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/dashboard/loan"
+              ><i class="fas fa-hand-holding mr-2"></i
+              ><span class="hide-on-small ">Apply for loan</span>
+            </a>
+          </li>
+        </ng-container>
+        <ng-container *ngIf="isAdmin">
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link " routerLink="/dashboard/users"
+              ><i class="fas fa-users mr-2"></i>
+              <span class="hide-on-small ">Users</span>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link " routerLink="/dashboard/loan-applications">
+              <i class="fas fa-bell mr-2"></i>
+              <span class="hide-on-small ">Loan applications</span>
+            </a>
+          </li>
+          <li class="nav-item" routerLinkActive="active">
+            <a class="nav-link " routerLink="/dashboard/loan-paid"
+              ><i class="fas fa-handshake mr-2"></i
+              ><span class="hide-on-small ">Paid loans</span>
+            </a>
+          </li>
+        </ng-container>
       </ul>
     </div>
     <div id="dashboard-row_col" class="col-10 bg-light pt-4 pr-4">

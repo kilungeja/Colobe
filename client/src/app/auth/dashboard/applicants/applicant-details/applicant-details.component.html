@@ -18,6 +18,7 @@
           <span class="badge badge-primary"> {{ loanDetail.amount }} </span>
         </div>
         <button
+          *ngIf="!samePerson"
           (click)="onConfirm()"
           [disabled]="confirming"
           class="btn btn-outline-secondary btn-sm btn-block mt-3"

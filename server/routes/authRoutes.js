@@ -9,7 +9,8 @@ const {
   postLogin,
   postRegister,
   getLoggedInUser,
-  updateUser
+  updateUser,
+  getUsers
 } = require("../controllers/authController");
 
 router.post(
@@ -113,6 +114,7 @@ router.post(
 );
 
 router.get("/fetch-user", isAuth, getLoggedInUser);
+router.get("/users", isAuth, getUsers);
 router.patch(
   "/update",
   isAuth,

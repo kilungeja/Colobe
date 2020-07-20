@@ -12,6 +12,8 @@ export class LoanApplicationsComponent implements OnInit {
   loansVerified: Loan[];
   loans: Loan[];
   loading = true;
+  isVerifying: boolean;
+  isPaid: boolean;
   loandingVerified = false;
   ngOnInit(): void {
     this.fetchCVerifyLoans();
@@ -45,22 +47,26 @@ export class LoanApplicationsComponent implements OnInit {
     );
   }
   onVerify(loanId) {
+    this.isVerifying = true;
     this.dashService.postVerified(loanId).subscribe(
       data => {
+        this.isVerifying = false;
         this.fetchCVerifyLoans();
       },
       (err: HttpErrorResponse) => {
-        console.log(err.error);
+        this.isVerifying = false;
       }
     );
   }
   onPaid(loanId) {
+    this.isPaid = true;
     this.dashService.postPaidVerified(loanId).subscribe(
       data => {
         this.fetchCVerifyLoans();
+        this.isPaid = false;
       },
       (err: HttpErrorResponse) => {
-        console.log(err.error);
+        this.isPaid = false;
       }
     );
   }

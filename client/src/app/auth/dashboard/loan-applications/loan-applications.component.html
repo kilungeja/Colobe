@@ -28,9 +28,13 @@
           <td>Tzsh {{ loan.amount }}</td>
           <td>{{ loan.updatedAt | date }}</td>
           <td>
-            <button class="btn btn-warning btn-sm" (click)="onVerify(loan._id)">
+            <button
+              class="btn btn-warning btn-sm"
+              [disabled]="isVerifying"
+              (click)="onVerify(loan._id)"
+            >
               <i class="fas fa-pencil-alt mr-2 " style="cursor: pointer"></i
-              >Verify
+              >{{ isVerifying ? "Verifying..." : "Verify" }}
             </button>
           </td>
         </tr>
@@ -72,8 +76,10 @@
             <button
               class="btn btn-primary btn-sm"
               (click)="onPaid(verifiedLoan._id)"
+              [disabled]="isPaid"
             >
-              <i class="fas fa-check mr-2 " style="cursor: pointer"></i>Paid
+              <i class="fas fa-check mr-2 " style="cursor: pointer"></i
+              >{{ isPaid ? "loading..." : "Paid" }}
             </button>
           </td>
         </tr>
