@@ -67,9 +67,9 @@ exports.postRegister = (req, res, next) => {
     })
     .then(hashedPassword => {
       new User({
-        firstname: firstName,
-        lastname: lastName,
-        username: username,
+        firstname: firstName.toLowerCase(),
+        lastname: lastName.toLowerCase(),
+        username: username.toLowerCase(),
         email: email,
         phone: phone,
         reg_no: regNo,
@@ -78,7 +78,6 @@ exports.postRegister = (req, res, next) => {
         .save()
         .then(user => {
           res.json({ msg: "Registered successfully and can now login" });
-          console.log(user);
         })
         .catch(err => {
           res.status(500).json({ msg: "Server error" });

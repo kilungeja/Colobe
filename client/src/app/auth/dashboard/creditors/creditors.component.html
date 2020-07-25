@@ -1,11 +1,11 @@
 <div class="row mx-auto">
   <div class="card card-body  shadow-lg">
-    <h4 class="text-muted text-center mb-3">Your creditors</h4>
+    <h4 class="text-muted text-center mb-3">Borrowers</h4>
     <p
       class="p-2 bg-secondary text-center text-white rounded-pill"
       *ngIf="!loading && creditors.length === 0"
     >
-      You have no creditors
+      No borrowers
     </p>
     <app-spinner *ngIf="loading"></app-spinner>
     <table class="table" *ngIf="!loading && creditors.length > 0">

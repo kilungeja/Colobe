@@ -12,8 +12,8 @@
       <thead class="bg-secondary text-white">
         <tr>
           <th scope="col"></th>
-          <th scope="col">Creditor</th>
-          <th scope="col">Debitor</th>
+          <th scope="col">Borrower</th>
+          <th scope="col">Lender</th>
           <th scope="col">Amount</th>
           <th scope="col">Date</th>
           <th scope="col">Action</th>
@@ -34,7 +34,7 @@
               (click)="onVerify(loan._id)"
             >
               <i class="fas fa-pencil-alt mr-2 " style="cursor: pointer"></i
-              >{{ isVerifying ? "Verifying..." : "Verify" }}
+              >Verify
             </button>
           </td>
         </tr>
@@ -55,8 +55,8 @@
       <thead class="bg-secondary text-white">
         <tr>
           <th scope="col"></th>
-          <th scope="col">Creditor</th>
-          <th scope="col">Debitor</th>
+          <th scope="col">Borrower</th>
+          <th scope="col">Lender</th>
           <th scope="col">Verified By</th>
           <th scope="col">Amount</th>
           <th scope="col">Date due</th>
@@ -78,8 +78,7 @@
               (click)="onPaid(verifiedLoan._id)"
               [disabled]="isPaid"
             >
-              <i class="fas fa-check mr-2 " style="cursor: pointer"></i
-              >{{ isPaid ? "loading..." : "Paid" }}
+              <i class="fas fa-check mr-2 " style="cursor: pointer"></i> Paid
             </button>
           </td>
         </tr>

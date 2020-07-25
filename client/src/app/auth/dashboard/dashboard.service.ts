@@ -7,11 +7,11 @@ export class DashboardService {
   constructor(private httpClient: HttpClient) {}
   BASE_URL = 'http://localhost:5000/api/dashboard';
   postLoan(loan) {
-    return this.httpClient.post<{ msg: String }>(`${this.BASE_URL}/loan`, loan);
+    return this.httpClient.post<{ msg: string }>(`${this.BASE_URL}/loan`, loan);
   }
 
   updateLoan(loan): any {
-    return this.httpClient.patch<{ msg: String }>(
+    return this.httpClient.patch<{ msg: string }>(
       `${this.BASE_URL}/loan`,
       loan
     );
@@ -68,6 +68,13 @@ export class DashboardService {
     }>(`${this.BASE_URL}/assets`);
   }
 
+  // get chart's data
+  getPieData() {
+    return this.httpClient.get<[
+      { y: number, name: string }
+    ]>(`${this.BASE_URL}/pieData`);
+  }
+
   // Admin requests
   getVerified() {
     return this.httpClient.get<Loan[]>(`${this.BASE_URL}/verified`);
@@ -103,5 +110,5 @@ export class DashboardService {
       total += percent;
     }
     return total.toFixed(roundToPlaces);
-  };
+  }
 }

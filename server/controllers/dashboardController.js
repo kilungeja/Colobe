@@ -231,7 +231,6 @@ exports.postVerified = async (req, res, next) => {
     let admin = await User.findById(userId);
     admin.assets += updatedLoan.interest * 0.3;
     await admin.save();
-    console.log(updatedLoan);
     res.json({ msg: "Verified successflly" });
   } catch (error) {
     res.status(500).json({ msg: "Server error" });
@@ -302,5 +301,58 @@ exports.getAdminCounts = async (req, res, next) => {
     res.json(data);
   } catch (error) {
     res.status(500).json({ msg: "Server error" });
+  }
+};
+
+// get piechart data
+exports.getPieData = async (req, res, next) => {
+  const { userId } = req;
+  // checking if logged in user is admin or not in order to send respective data back
+  let user;
+  try {
+    user = await User.findById(userId);
+  } catch (error) {
+    return res.status(500).json({ msg: "Server error" });
+  }
+  if (user.isAdmin) {
+    try {
+      const promises = await Promise.all([
+        User.find({ isAdmin: false, assets: 0 }).countDocuments(),
+        User.find({ isAdmin: false, assets: { $gt: 0 } }).countDocuments(),
+        User.find({ isAdmin: false, assets: { $lt: 0 } }).countDocuments()
+      ]);
+      data = [
+        { y: promises[0], name: "Not active" },
+        { y: promises[1], name: "Borrowers" },
+        { y: promises[2], name: "Lenders" }
+      ];
+      res.json(data);
+    } catch (error) {
+      res.status(500).json({ msg: "Server error" });
+    }
+  } else {
+    try {
+      const promises = await Promise.all([
+        Loan.find({ loanStatus: "Not paid", debitor: user }).populate(
+          "debitor"
+        ),
+        Loan.find({ loanStatus: "Not paid", applicant: userId }).populate(
+          "applicant"
+        )
+      ]);
+      let liablity = promises[1].reduce((acc, loan) => {
+        return acc + (loan.interest + loan.amount);
+      }, 0);
+      let asst = promises[0].reduce((acc, loan) => {
+        return acc + (loan.interest + loan.amount);
+      }, 0);
+      data = [
+        { y: asst, name: "assets" },
+        { y: liablity, name: "liabilities" }
+      ];
+      res.json(data);
+    } catch (error) {
+      res.status(500).json({ msg: "Server error" });
+    }
   }
 };

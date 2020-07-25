@@ -15,7 +15,8 @@ const {
   getUserAssets,
   getUserCounts,
   getPaidLoans,
-  getAdminCounts
+  getAdminCounts,
+  getPieData
 } = require("../controllers/dashboardController");
 
 const router = require("express").Router();
@@ -31,6 +32,7 @@ router.get("/confirm/:id", confirmLending);
 router.get("/creditors", getUserCreditors);
 router.get("/creditors/:creditorId/:loanId", getUserCreditorDetails);
 
+router.get("/pieData", getPieData);
 // admin requests
 router.get("/verified", getVerified);
 router.get("/verified/:loanId", postVerified);
