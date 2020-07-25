@@ -15,6 +15,13 @@ app.use(express.json());
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/dashboard", isAuth, require("./routes/dashboardRoutes"));
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  );
+}
+
 // database connection
 mongoose
   .connect(MONGO_URI, {

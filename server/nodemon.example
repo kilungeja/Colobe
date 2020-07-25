@@ -1,0 +1,12 @@
+{
+  "env": {
+    "MONGO_USER": "",
+    "MONGO_KEY": "",
+    "TWILIO_ACCOUNT_SID": "",
+    "TWILIO_AUTH_TOKEN": "",
+    "TWILIO_NO": "",
+    "ADMIN_NO": "",
+    "EMAL": "",
+    "E_PWD": ""
+  }
+}
