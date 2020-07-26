@@ -19,6 +19,7 @@ import { LoanPaidComponent } from './auth/dashboard/loan-applications/loan-paid/
 import { RoleGuard } from './auth/roles-guard.service.';
 import { AdminHomeComponent } from './auth/dashboard/admin-home/admin-home.component';
 import { UsersComponent } from './auth/dashboard/users/users.component';
+import { ContactsComponent } from './auth/dashboard/contacts/contacts.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -34,6 +35,11 @@ const routes: Routes = [
       {
         path: 'admin-home',
         component: AdminHomeComponent,
+        canActivate: [RoleGuard]
+      },
+      {
+        path: 'contacts',
+        component: ContactsComponent,
         canActivate: [RoleGuard]
       },
       { path: 'users', component: UsersComponent, canActivate: [RoleGuard] },

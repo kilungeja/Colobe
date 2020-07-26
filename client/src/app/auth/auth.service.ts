@@ -12,7 +12,7 @@ export class AuthService {
     private route: Router,
     private jwtHelper: JwtHelperService
   ) {}
-  BASE_URL = 'http://localhost:5000/api/auth';
+  BASE_URL = '/api/auth';
   postRegister(userData) {
     return this.httpClient
       .post<{ msg: string }>(`${this.BASE_URL}/register`, {

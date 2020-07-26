@@ -1,0 +1,34 @@
+<div class="row mx-auto">
+  <div class="col-12 bg-light p-4 shadow-lg">
+    <h4 class="text-muted text-center mb-2">Contacts</h4>
+    <p
+      class="p-2 bg-secondary text-center text-white my-3 rounded-pill"
+      *ngIf="!loading && contacts && contacts.length < 1"
+    >
+      <i class="fas fa-info-circle mr-2"></i> No Contacts
+    </p>
+    <app-spinner *ngIf="loading"></app-spinner>
+    <table class="table" *ngIf="!loading && contacts && contacts.length > 0">
+      <thead class="bg-secondary text-white">
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Email</th>
+          <th scope="col">Phone number</th>
+          <th scope="col">Message</th>
+          <th scope="col">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of contacts; let i = index">
+          <th scope="row">{{ i + 1 }}</th>
+          <td>{{ contact.email }}</td>
+          <td>{{ contact.phone }}</td>
+          <td>
+            {{ contact.message }}
+          </td>
+          <td>{{ contact.createdAt | date: "medium" }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

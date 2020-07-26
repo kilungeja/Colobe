@@ -1,36 +1,78 @@
 <section id="about">
-    <div class="overlay"></div>
-    <app-navbar></app-navbar>
+  <div class="overlay"></div>
+  <app-navbar></app-navbar>
 </section>
 <section id="about-content" class="py-5">
-    <div class="container">
-       <div class="row">
-           <div class="col-md-6">
-                <h1 class="text-center">About <span class="text-primary">Colobe</span></h1>
-                <p class="lead">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia fuga placeat odit? Enim incidunt suscipit quaerat consequuntur! Quo temporibus dolor incidunt quaerat blanditiis corrupti consectetur. Facere, quo facilis cupiditate debitis perferendis aspernatur, optio quibusdam nisi delectus perspiciatis ullam tenetur dicta laboriosam iure vitae, iusto aliquam unde recusandae dolore sequi enim.
-                </p>
-           </div>
-           <div class="col-md-6">
-               <div class="card card-body bg-light shadow">
-                   <h1 class="card-title text-center">Contact us</h1>
-                    <form>
-                        <div class="form-group">
-                            <label for="email">Email address</label>
-                            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
-                        </div>
-                        <div class="form-group">
-                            <label for="phone">Phone number</label>
-                            <input type="text" class="form-control" id="phone">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-check-label" for="msg">Your message</label>
-                            <textarea class="form-control" name="msg" id="msg"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-block btn-primary">Submit</button>
-                    </form>
-               </div>
-           </div>
-       </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1 class="text-center text-muted">
+          About <span class="text-primary">Colobe</span>
+        </h1>
+        <p class="lead">
+          As university students we all need money to live in our environment.
+          Since sometimes we are out of money and we can&#39;t easily get people
+          who can trust us to borrow us the money in times of our needs. And
+          sometimes we have a lot of money that we don&#39;t know what to do
+          with it to multiply it. From there we discover money is a problem, how
+          to get it in times of emergence and how to benefit in times of excess.
+          The other problem is trust, the presence of rules and regulations will
+          force the borrower to return the money and the lender will be able to
+          give money expecting it will be returned on time, since the interest
+          will be provided.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <div class="card card-body bg-light shadow">
+          <ng-container *ngIf="message">
+            <div class="alert alert-{{ message.type }}" role="alert">
+              <strong><i class="fas fa-info mr-2"></i></strong>
+              {{ message.msg }}
+            </div>
+          </ng-container>
+          <h3 class="card-title text-center text-muted">Contact us</h3>
+          <form #contact="ngForm" (submit)="onSubmit(contact)">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input
+                required
+                type="email"
+                class="form-control"
+                ngModel
+                name="email"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone number</label>
+              <input
+                required
+                type="text"
+                class="form-control"
+                ngModel
+                name="phone"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-check-label" for="msg">Your message</label>
+              <textarea
+                required
+                class="form-control"
+                ngModel
+                name="message"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-block btn-primary"
+              [disabled]="loading || contact.invalid"
+            >
+              <i class="fas fa-paper-plane mr-2"></i
+              >{{ loading ? "Sending..." : "Submit" }}
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 </section>

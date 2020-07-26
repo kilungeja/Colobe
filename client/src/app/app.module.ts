@@ -30,6 +30,9 @@ import { LoanPaidComponent } from './auth/dashboard/loan-applications/loan-paid/
 import { AdminHomeComponent } from './auth/dashboard/admin-home/admin-home.component';
 import { UsersComponent } from './auth/dashboard/users/users.component';
 import { PieChartComponent } from './auth/dashboard/charts/pie/pie.component';
+import { ContactsComponent } from './auth/dashboard/contacts/contacts.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -60,7 +63,8 @@ export function tokenGetter() {
     LoanApplicationsComponent,
     LoanPaidComponent,
     UsersComponent,
-    PieChartComponent
+    PieChartComponent,
+    ContactsComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +76,8 @@ export function tokenGetter() {
         tokenGetter,
         whitelistedDomains: ['localhost:5000']
       }
-    })
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]
